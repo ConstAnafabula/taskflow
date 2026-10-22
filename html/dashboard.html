@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard · TaskFlow</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <!-- ===== Hidden state-toggles (CSS-only interactivity, no JS) ===== -->
+    <input
+      type="checkbox"
+      id="modal-toggle"
+      class="toggle-input"
+      aria-hidden="true"
+    />
+    <input
+      type="checkbox"
+      id="sidebar-toggle"
+      class="toggle-input"
+      aria-hidden="true"
+    />
+
+    <div class="app-shell">
+      <!-- Overlay used to close the mobile sidebar by tapping outside it -->
+      <label
+        for="sidebar-toggle"
+        class="sidebar-overlay"
+        aria-hidden="true"
+      ></label>
+
+      <!-- ============================= Sidebar ============================= -->
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <a href="/" class="sidebar-brand">
+            <span class="brand-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12.5L9.5 17L19 7"
+                  stroke="white"
+                  stroke-width="2.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>TaskFlow</span>
+          </a>
+          <label for="sidebar-toggle" class="sidebar-close" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main">
+          <p class="nav-group-label">Workspace</p>
+          <a href="/dashboard" class="nav-item is-active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="3"
+                width="7"
+                height="9"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="14"
+                y="3"
+                width="7"
+                height="5"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="14"
+                y="12"
+                width="7"
+                height="9"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="3"
+                y="16"
+                width="7"
+                height="5"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="/boards" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path d="M3 9H21" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <span>Boards</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12.5L9.5 17L19 7"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="4"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+            </svg>
+            <span>My Tasks</span>
+            <span class="nav-badge">6</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="9"
+                cy="8"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <circle
+                cx="17"
+                cy="9"
+                r="2.3"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M3.5 20c0-3 2.5-5.2 5.5-5.2s5.5 2.2 5.5 5.2"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+              <path
+                d="M15.2 15c2.2.3 3.8 2.2 3.8 5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Team</span>
+          </a>
+
+          <p class="nav-group-label">General</p>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="12"
+                r="3.2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M12 3.5V6M12 18V20.5M20.5 12H18M6 12H3.5M17.7 6.3L16 8M8 16L6.3 17.7M17.7 17.7L16 16M8 8L6.3 6.3"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="index.html" class="sidebar-user">
+          <span class="avatar avatar--md">JC</span>
+          <span class="sidebar-user-info">
+            <span class="sidebar-user-name">Jane Cooper</span>
+            <span class="sidebar-user-role">Sign out</span>
+          </span>
+        </a>
+      </aside>
+
+      <!-- ============================= Main ============================= -->
+      <div class="main">
+        <!-- Topbar -->
+        <header class="topbar">
+          <label for="sidebar-toggle" class="hamburger-btn" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 7H20M4 12H20M4 17H20"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+
+          <label class="search-field">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M20 20L16.5 16.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search tasks, boards, people…"
+              aria-label="Search"
+            />
+          </label>
+
+          <div class="topbar-actions">
+            <!-- Notifications dropdown -->
+            <div class="dropdown">
+              <input
+                type="checkbox"
+                id="notif-toggle"
+                class="toggle-input"
+                aria-hidden="true"
+              />
+              <label for="notif-toggle" class="icon-btn" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 19a2 2 0 0 0 4 0"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span class="icon-btn-dot"></span>
+              </label>
+
+              <div class="dropdown-panel notif-panel">
+                <p class="dropdown-title">Notifications</p>
+                <ul class="notif-list">
+                  <li>
+                    <span class="avatar avatar--xs">MP</span>
+                    <p>
+                      <strong>Mia Park</strong> moved a task to In Progress<span
+                        >2m ago</span
+                      >
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">RK</span>
+                    <p>
+                      <strong>Ravi Kapoor</strong> completed a task<span
+                        >1h ago</span
+                      >
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">JC</span>
+                    <p>
+                      <strong>Jane Cooper</strong> left a comment<span
+                        >3h ago</span
+                      >
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <label for="modal-toggle" class="btn-primary-sm">+ New Task</label>
+
+            <!-- Profile dropdown -->
+            <div class="dropdown">
+              <input
+                type="checkbox"
+                id="profile-toggle"
+                class="toggle-input"
+                aria-hidden="true"
+              />
+              <label
+                for="profile-toggle"
+                class="avatar avatar--sm avatar--clickable"
+                aria-hidden="true"
+                >JC</label
+              >
+
+              <div class="dropdown-panel profile-panel">
+                <p class="dropdown-title">Jane Cooper</p>
+                <p class="dropdown-subtitle">jane.cooper@example.com</p>
+                <a href="#" class="dropdown-link">View profile</a>
+                <a href="#" class="dropdown-link">Account settings</a>
+                <a href="index.html" class="dropdown-link dropdown-link--danger"
+                  >Sign out</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <div class="page-heading">
+            <div>
+              <h1>Good morning, Jane 👋</h1>
+              <p class="page-sub">
+                Tuesday, July 21 · Here's what's happening across your boards.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <section class="stats-grid" aria-label="Overview stats">
+            <div class="stat-card">
+              <div class="stat-icon stat-icon--blue" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="16"
+                    rx="2"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M7 9H17M7 13H14"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <p class="stat-value"></p>
+              <p class="stat-label">Total tasks</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon--green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12.5L9.5 17L19 7"
+                    stroke="#16A34A"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <p class="stat-value"></p>
+              <p class="stat-label">Completed</p>
+              <span class="stat-trend stat-trend--up">+18% this week</span>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon--amber" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="8.5"
+                    stroke="#D97706"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M12 7.5V12L15 14"
+                    stroke="#D97706"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <p class="stat-value"></p>
+              <p class="stat-label">In progress</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon--red" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 3.5L21 19.5H3L12 3.5Z"
+                    stroke="#DC2626"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 10V14"
+                    stroke="#DC2626"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="12" cy="16.7" r="0.9" fill="#DC2626" />
+                </svg>
+              </div>
+              <p class="stat-value"></p>
+              <p class="stat-label">Overdue</p>
+              <span class="stat-trend stat-trend--down">Needs attention</span>
+            </div>
+          </section>
+
+          <!-- Board + side panels -->
+          <div class="content-grid">
+            <!-- Kanban board -->
+            <section class="board-panel" aria-label="Launch Checklist board">
+              <div class="panel-header">
+                <div>
+                  <h2>Launch Checklist</h2>
+                  <p class="panel-sub">4 members · Due Aug 2</p>
+                </div>
+                <div class="avatar-stack" aria-hidden="true">
+                  <span class="avatar avatar--sm avatar--stacked">JC</span>
+                  <span class="avatar avatar--sm avatar--stacked">MP</span>
+                  <span class="avatar avatar--sm avatar--stacked">RK</span>
+                </div>
+              </div>
+
+              <!-- Filter chips (CSS-only: radio inputs filter the columns below) -->
+              <div
+                class="filter-chips"
+                role="group"
+                aria-label="Filter tasks by status"
+              >
+                <input
+                  type="radio"
+                  name="task-filter"
+                  id="filter-all"
+                  class="filter-radio"
+                  checked
+                />
+                <label for="filter-all" class="filter-chip">All</label>
+
+                <input
+                  type="radio"
+                  name="task-filter"
+                  id="filter-todo"
+                  class="filter-radio"
+                />
+                <label for="filter-todo" class="filter-chip">To Do</label>
+
+                <input
+                  type="radio"
+                  name="task-filter"
+                  id="filter-progress"
+                  class="filter-radio"
+                />
+                <label for="filter-progress" class="filter-chip"
+                  >In Progress</label
+                >
+
+                <input
+                  type="radio"
+                  name="task-filter"
+                  id="filter-done"
+                  class="filter-radio"
+                />
+                <label for="filter-done" class="filter-chip">Done</label>
+              </div>
+
+              <div class="kanban">
+                <details class="kanban-column col-todo" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--gray"></span>
+                    <h3>To Do</h3>
+                    <span class="column-count">3</span>
+                    <svg
+                      class="chevron"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </summary>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-1"
+                      class="task-check-input"
+                    />
+                    <label
+                      for="task-1"
+                      class="task-check-label"
+                      aria-label="Mark 'Design onboarding email' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--purple">Design</span>
+                      <h4>Design onboarding email</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Jul 24</span>
+                        <span class="avatar avatar--xs">MP</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-2"
+                      class="task-check-input"
+                    />
+                    <label
+                      for="task-2"
+                      class="task-check-label"
+                      aria-label="Mark 'Publish release notes' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--blue">Docs</span>
+                      <h4>Publish release notes</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Jul 25</span>
+                        <span class="avatar avatar--xs">JC</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-3"
+                      class="task-check-input"
+                    />
+                    <label
+                      for="task-3"
+                      class="task-check-label"
+                      aria-label="Mark 'Update pricing page copy' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--blue">Docs</span>
+                      <h4>Update pricing page copy</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Jul 28</span>
+                        <span class="avatar avatar--xs">RK</span>
+                      </div>
+                    </div>
+                  </article>
+                </details>
+
+                <details class="kanban-column col-progress" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--amber"></span>
+                    <h3>In Progress</h3>
+                    <span class="column-count">2</span>
+                    <svg
+                      class="chevron"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </summary>
+
+                  <article class="task-card task-card--active">
+                    <input
+                      type="checkbox"
+                      id="task-4"
+                      class="task-check-input"
+                    />
+                    <label
+                      for="task-4"
+                      class="task-check-label"
+                      aria-label="Mark 'Fix checkout redirect bug' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--amber">Engineering</span>
+                      <h4>Fix checkout redirect bug</h4>
+                      <div class="task-meta">
+                        <span class="task-due task-due--soon">Tomorrow</span>
+                        <span class="avatar avatar--xs">JC</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-5"
+                      class="task-check-input"
+                    />
+                    <label
+                      for="task-5"
+                      class="task-check-label"
+                      aria-label="Mark 'Finalize landing page hero' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--purple">Design</span>
+                      <h4>Finalize landing page hero</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Jul 23</span>
+                        <span class="avatar avatar--xs">MP</span>
+                      </div>
+                    </div>
+                  </article>
+                </details>
+
+                <details class="kanban-column col-done" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--green"></span>
+                    <h3>Done</h3>
+                    <span class="column-count">2</span>
+                    <svg
+                      class="chevron"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </summary>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-6"
+                      class="task-check-input"
+                      checked
+                    />
+                    <label
+                      for="task-6"
+                      class="task-check-label"
+                      aria-label="Mark 'Draft product brief' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--green">Marketing</span>
+                      <h4>Draft product brief</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Completed</span>
+                        <span class="avatar avatar--xs">RK</span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="task-card">
+                    <input
+                      type="checkbox"
+                      id="task-7"
+                      class="task-check-input"
+                      checked
+                    />
+                    <label
+                      for="task-7"
+                      class="task-check-label"
+                      aria-label="Mark 'Review with team' as complete"
+                    ></label>
+                    <div class="task-card-body">
+                      <span class="task-tag task-tag--green">Marketing</span>
+                      <h4>Review with team</h4>
+                      <div class="task-meta">
+                        <span class="task-due">Completed</span>
+                        <span class="avatar avatar--xs">JC</span>
+                      </div>
+                    </div>
+                  </article>
+                </details>
+              </div>
+            </section>
+
+            <!-- Right rail -->
+            <aside class="side-rail">
+              <section class="rail-panel" aria-label="Upcoming deadlines">
+                <h2>Upcoming deadlines</h2>
+                <ul class="deadline-list">
+                  <li>
+                    <span class="deadline-dot deadline-dot--red"></span>
+                    <div class="deadline-info">
+                      <p>Fix checkout redirect bug</p>
+                      <span>Due tomorrow</span>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="deadline-dot deadline-dot--amber"></span>
+                    <div class="deadline-info">
+                      <p>Finalize landing page hero</p>
+                      <span>Due in 2 days</span>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="deadline-dot deadline-dot--blue"></span>
+                    <div class="deadline-info">
+                      <p>Design onboarding email</p>
+                      <span>Due in 3 days</span>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+
+              <details class="rail-panel" open>
+                <summary class="rail-panel-summary">
+                  <h2>Team activity</h2>
+                  <svg
+                    class="chevron"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M6 9L12 15L18 9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </summary>
+                <ul class="activity-list">
+                  <li>
+                    <span class="avatar avatar--xs">MP</span>
+                    <p>
+                      <strong>Mia Park</strong> moved
+                      <em>Finalize landing page hero</em> to In Progress
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">RK</span>
+                    <p>
+                      <strong>Ravi Kapoor</strong> completed
+                      <em>Review with team</em>
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">JC</span>
+                    <p>
+                      <strong>Jane Cooper</strong> commented on
+                      <em>Checkout redirect bug</em>
+                    </p>
+                  </li>
+                </ul>
+              </details>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= New Task modal ============================= -->
+    <div class="modal-overlay">
+      <label
+        for="modal-toggle"
+        class="modal-backdrop"
+        aria-hidden="true"
+      ></label>
+
+      <div class="modal-box" role="dialog" aria-labelledby="new-task-title">
+        <div class="modal-header">
+          <h2 id="new-task-title">New task</h2>
+          <label
+            for="modal-toggle"
+            class="modal-close"
+            aria-label="Close dialog"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+        </div>
+
+<form class="modal-form">
+          <div class="field-group">
+            <label for="new-task-name">Task name</label>
+            <input
+              type="text"
+              id="new-task-name"
+              placeholder="e.g. Update onboarding flow"
+            />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="new-task-board">Board</label>
+              <select id="new-task-board">
+                
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="new-task-due">Due date</label>
+              <input type="date" id="new-task-due" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="new-task-status">Status</label>
+              <select id="new-task-status">
+                <option value="to-do">To Do</option>
+                <option value="in-progress">In Progress</option>
+                <option value="in-review">In Review</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="new-task-priority">Priority</label>
+              <select id="new-task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-assignee">Assignee</label>
+            <select id="new-task-assignee">
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-notes">Notes</label>
+            <textarea
+              id="new-task-notes"
+              rows="3"
+              placeholder="Add any extra context…"
+            ></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <label for="modal-toggle" class="btn-secondary-sm">Cancel</label>
+            <input type="submit" value="Create task" class="btn-primary-sm" id="createTask"/>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/script/api.js"></script>
+    <script src="/script/dashboard.js"></script>
+  </body>
+</html>

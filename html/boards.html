@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boards · TaskFlow</title>
+    <link rel="stylesheet" href="/css/boards.css" />
+  </head>
+  <body>
+    <!-- ===== Hidden state-toggles (CSS-only interactivity, no JS) ===== -->
+    <input
+      type="checkbox"
+      id="modal-toggle"
+      class="toggle-input"
+      aria-hidden="true"
+    />
+    <input
+      type="checkbox"
+      id="sidebar-toggle"
+      class="toggle-input"
+      aria-hidden="true"
+    />
+
+    <div class="app-shell">
+      <!-- Overlay used to close the mobile sidebar by tapping outside it -->
+      <label
+        for="sidebar-toggle"
+        class="sidebar-overlay"
+        aria-hidden="true"
+      ></label>
+
+      <!-- ============================= Sidebar ============================= -->
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <a href="/" class="sidebar-brand">
+            <span class="brand-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12.5L9.5 17L19 7"
+                  stroke="white"
+                  stroke-width="2.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>TaskFlow</span>
+          </a>
+          <label for="sidebar-toggle" class="sidebar-close" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main">
+          <p class="nav-group-label">Workspace</p>
+          <a href="/dashboard" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="3"
+                width="7"
+                height="9"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="14"
+                y="3"
+                width="7"
+                height="5"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="14"
+                y="12"
+                width="7"
+                height="9"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <rect
+                x="3"
+                y="16"
+                width="7"
+                height="5"
+                rx="1.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="/boards" class="nav-item is-active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path d="M3 9H21" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <span>Boards</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12.5L9.5 17L19 7"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="4"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+            </svg>
+            <span>My Tasks</span>
+            <span class="nav-badge">6</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="9"
+                cy="8"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <circle
+                cx="17"
+                cy="9"
+                r="2.3"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M3.5 20c0-3 2.5-5.2 5.5-5.2s5.5 2.2 5.5 5.2"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+              <path
+                d="M15.2 15c2.2.3 3.8 2.2 3.8 5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Team</span>
+          </a>
+
+          <p class="nav-group-label">General</p>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="12"
+                r="3.2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M12 3.5V6M12 18V20.5M20.5 12H18M6 12H3.5M17.7 6.3L16 8M8 16L6.3 17.7M17.7 17.7L16 16M8 8L6.3 6.3"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="index.html" class="sidebar-user">
+          <span class="avatar avatar--md">JC</span>
+          <span class="sidebar-user-info">
+            <span class="sidebar-user-name">Jane Cooper</span>
+            <span class="sidebar-user-role">Sign out</span>
+          </span>
+        </a>
+      </aside>
+
+      <!-- ============================= Main ============================= -->
+      <div class="main">
+        <!-- Topbar -->
+        <header class="topbar">
+          <label for="sidebar-toggle" class="hamburger-btn" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 7H20M4 12H20M4 17H20"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+
+          <label class="search-field">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M20 20L16.5 16.5"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search tasks, boards, people…"
+              aria-label="Search"
+            />
+          </label>
+
+          <div class="topbar-actions">
+            <!-- Notifications dropdown -->
+            <div class="dropdown">
+              <input
+                type="checkbox"
+                id="notif-toggle"
+                class="toggle-input"
+                aria-hidden="true"
+              />
+              <label for="notif-toggle" class="icon-btn" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 19a2 2 0 0 0 4 0"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span class="icon-btn-dot"></span>
+              </label>
+
+              <div class="dropdown-panel notif-panel">
+                <p class="dropdown-title">Notifications</p>
+                <ul class="notif-list">
+                  <li>
+                    <span class="avatar avatar--xs">MP</span>
+                    <p>
+                      <strong>Mia Park</strong> moved a task to In Progress<span
+                        >2m ago</span
+                      >
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">RK</span>
+                    <p>
+                      <strong>Ravi Kapoor</strong> completed a task<span
+                        >1h ago</span
+                      >
+                    </p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">JC</span>
+                    <p>
+                      <strong>Jane Cooper</strong> left a comment<span
+                        >3h ago</span
+                      >
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <label for="modal-toggle" class="btn-primary-sm">+ New Task</label>
+
+            <!-- Profile dropdown -->
+            <div class="dropdown">
+              <input
+                type="checkbox"
+                id="profile-toggle"
+                class="toggle-input"
+                aria-hidden="true"
+              />
+              <label
+                for="profile-toggle"
+                class="avatar avatar--sm avatar--clickable"
+                aria-hidden="true"
+                >JC</label
+              >
+
+              <div class="dropdown-panel profile-panel">
+                <p class="dropdown-title">Jane Cooper</p>
+                <p class="dropdown-subtitle">jane.cooper@example.com</p>
+                <a href="#" class="dropdown-link">View profile</a>
+                <a href="#" class="dropdown-link">Account settings</a>
+                <a href="index.html" class="dropdown-link dropdown-link--danger"
+                  >Sign out</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <div class="page-heading page-heading--split">
+            <div>
+              <h1>Boards</h1>
+              <p class="page-sub">Organize your work into boards.</p>
+            </div>
+            <label for="board-modal-toggle" class="btn-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 5V19M5 12H19"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              Create Board
+            </label>
+          </div>
+
+          <!-- ============================= Boards toolbar + grid ============================= -->
+          <section class="boards-page" aria-label="Your boards">
+            <div class="boards-toolbar">
+              <label class="search-field search-field--boards">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="11"
+                    cy="11"
+                    r="7"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M20 20L16.5 16.5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search boards…"
+                  aria-label="Search boards"
+                />
+              </label>
+
+              <div
+                class="filter-chips board-filter-chips"
+                role="group"
+                aria-label="Filter boards"
+              >
+                <input
+                  type="radio"
+                  name="board-filter"
+                  id="bf-all"
+                  class="filter-radio"
+                  checked
+                />
+                <label for="bf-all" class="filter-chip">All</label>
+
+                <input
+                  type="radio"
+                  name="board-filter"
+                  id="bf-recent"
+                  class="filter-radio"
+                />
+                <label for="bf-recent" class="filter-chip">Recent</label>
+
+                <input
+                  type="radio"
+                  name="board-filter"
+                  id="bf-shared"
+                  class="filter-radio"
+                />
+                <label for="bf-shared" class="filter-chip">Shared</label>
+
+                <input
+                  type="radio"
+                  name="board-filter"
+                  id="bf-favorites"
+                  class="filter-radio"
+                />
+                <label for="bf-favorites" class="filter-chip">Favorites</label>
+              </div>
+            </div>
+
+            <!-- Boards grid -->
+            <div class="boards-grid"></div>
+
+            <!-- ============================= Empty state ============================= -->
+            <!-- Hidden by default (see .boards-empty { display:none } in boards.css).
+                 To preview it: set .boards-grid { display:none } and .boards-empty { display:flex } -->
+            <div class="boards-empty">
+              <div class="boards-empty-illustration" aria-hidden="true">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="16"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <path
+                    d="M3 9H21M9 4V20"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <path
+                    d="M12 13V17M10 15H14"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h2>No boards yet</h2>
+              <p>
+                Boards help you group tasks by project or team. Create your
+                first one to get started.
+              </p>
+              <label for="board-modal-toggle" class="btn-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 5V19M5 12H19"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Create Your First Board
+              </label>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= New Task modal (unchanged, reused from Dashboard) ============================= -->
+    <div class="modal-overlay task-modal-overlay">
+      <label
+        for="modal-toggle"
+        class="modal-backdrop"
+        aria-hidden="true"
+      ></label>
+
+      <div class="modal-box" role="dialog" aria-labelledby="new-task-title">
+        <div class="modal-header">
+          <h2 id="new-task-title">New task</h2>
+          <label
+            for="modal-toggle"
+            class="modal-close"
+            aria-label="Close dialog"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+        </div>
+
+        <form class="modal-form">
+          <div class="field-group">
+            <label for="new-task-name">Task name</label>
+            <input
+              type="text"
+              id="new-task-name"
+              placeholder="e.g. Update onboarding flow"
+            />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="new-task-board">Board</label>
+              <select id="new-task-board">
+                <option>Launch Checklist</option>
+                <option>Marketing Sprint</option>
+                <option>Bug Backlog</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="new-task-due">Due date</label>
+              <input type="date" id="new-task-due" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-assignee">Assignee</label>
+            <select id="new-task-assignee">
+              <option>Jane Cooper</option>
+              <option>Mia Park</option>
+              <option>Ravi Kapoor</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-notes">Notes</label>
+            <textarea
+              id="new-task-notes"
+              rows="3"
+              placeholder="Add any extra context…"
+            ></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <label for="modal-toggle" class="btn-secondary-sm">Cancel</label>
+            <label for="modal-toggle" class="btn-primary-sm">Create task</label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================= Create Board modal ============================= -->
+    <input
+      type="checkbox"
+      id="board-modal-toggle"
+      class="toggle-input"
+      aria-hidden="true"
+    />
+    <div class="modal-overlay board-modal-overlay">
+      <label
+        for="board-modal-toggle"
+        class="modal-backdrop"
+        aria-hidden="true"
+      ></label>
+
+      <div class="modal-box" role="dialog" aria-labelledby="new-board-title">
+        <div class="modal-header">
+          <h2 id="new-board-title">Create board</h2>
+          <label
+            for="board-modal-toggle"
+            class="modal-close"
+            aria-label="Close dialog"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 6L18 18M18 6L6 18"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </label>
+        </div>
+
+        <form class="modal-form" action="#">
+          <div class="field-group">
+            <label for="new-board-name">Board name</label>
+            <input
+              type="text"
+              id="new-board-name"
+              placeholder="e.g. Product Launch"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="new-board-desc">Description</label>
+            <textarea
+              id="new-board-desc"
+              rows="3"
+              placeholder="What is this board for?"
+            ></textarea>
+          </div>
+
+          <div class="field-group">
+            <label for="new-board-visibility">Visibility</label>
+            <select id="new-board-visibility">
+              <option>Only me</option>
+              <option>Shared with team</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <label for="board-modal-toggle" class="btn-secondary-sm">
+              Cancel
+            </label>
+            <input
+              type="submit"
+              value="Create board"
+              class="btn-primary-sm"
+              id="createBoard"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/script/api.js"></script>
+    <script src="/script/boards.js"></script>
+  </body>
+</html>

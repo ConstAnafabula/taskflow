@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow — Organize your work, actually finish it</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- ============================= Navbar ============================= -->
+    <header class="nav-bar">
+      <div class="nav-inner">
+        <a href="#top" class="nav-brand">
+          <span class="brand-icon" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12.5L9.5 17L19 7"
+                stroke="white"
+                stroke-width="2.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          TaskFlow
+        </a>
+
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="/login" class="nav-signin">Sign in</a>
+          <a href="/register" class="btn-nav-cta">Get started free</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============================= Hero ============================= -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">For small teams &amp; solo builders</p>
+            <h1>Organize your work.<br />Actually finish it.</h1>
+            <p class="hero-sub">
+              TaskFlow brings your tasks, deadlines, and team into one clear
+              view — so nothing quietly slips through the cracks.
+            </p>
+
+            <div class="hero-actions">
+              <a href="/register" class="btn-primary-lg">Get started free</a>
+              <a href="#how-it-works" class="btn-secondary-lg"
+                >See how it works</a
+              >
+            </div>
+
+            <p class="hero-note">
+              No credit card required · Free for up to 5 tasks boards
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="task-card">
+              <div class="task-card-header">
+                <span class="task-card-dot"></span>
+                <span class="task-card-dot"></span>
+                <span class="task-card-dot"></span>
+                <span class="task-card-title">Launch Checklist</span>
+              </div>
+
+              <ul class="task-list">
+                <li class="task-item done">
+                  <span class="task-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M5 12.5L9.5 17L19 7"
+                        stroke="white"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span class="task-label">Draft product brief</span>
+                </li>
+                <li class="task-item done">
+                  <span class="task-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M5 12.5L9.5 17L19 7"
+                        stroke="white"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span class="task-label">Review with team</span>
+                </li>
+                <li class="task-item">
+                  <span class="task-check task-check--empty"></span>
+                  <span class="task-label">Schedule launch call</span>
+                  <span class="task-due">Tomorrow</span>
+                </li>
+                <li class="task-item">
+                  <span class="task-check task-check--empty"></span>
+                  <span class="task-label">Publish release notes</span>
+                  <span class="task-due">Fri</span>
+                </li>
+              </ul>
+
+              <div class="task-card-footer">
+                <div class="progress-track">
+                  <div class="progress-fill"></div>
+                </div>
+                <span class="progress-label">2 of 4 done</span>
+              </div>
+            </div>
+
+            <div class="hero-blob" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= Logos strip ============================= -->
+      <section class="trust-strip">
+        <p>Trusted by focused teams at startups and side projects everywhere</p>
+      </section>
+
+      <!-- ============================= Features ============================= -->
+      <section class="features" id="features">
+        <div class="section-inner">
+          <p class="eyebrow eyebrow--center">Why TaskFlow</p>
+          <h2 class="section-heading">
+            Everything your team needs, nothing it doesn't
+          </h2>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <rect
+                    x="3"
+                    y="4"
+                    width="7"
+                    height="16"
+                    rx="2"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                  <rect
+                    x="14"
+                    y="4"
+                    width="7"
+                    height="10"
+                    rx="2"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                </svg>
+              </div>
+              <h3>Boards that adapt to you</h3>
+              <p>
+                Switch between list, board, and timeline views without losing
+                your place. Organize by project, sprint, or however your team
+                actually thinks.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="8.5"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M12 7.5V12L15 14"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Deadlines that don't sneak up</h3>
+              <p>
+                Smart due-date reminders surface what's urgent before it's late
+                — not after. Your team sees today's priorities the moment they
+                log in.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="3"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                  <circle
+                    cx="17"
+                    cy="9"
+                    r="2.5"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M3 20c0-3 2.5-5 5-5s5 2 5 5"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M14.5 15.2c2 .3 3.5 2 3.5 4.8"
+                    stroke="#2563EB"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <h3>Built for teams, not just to-do lists</h3>
+              <p>
+                Assign owners, leave comments where the work happens, and know
+                exactly who's doing what — without another status meeting.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= How it works ============================= -->
+      <section class="how-it-works" id="how-it-works">
+        <div class="section-inner">
+          <p class="eyebrow eyebrow--center">Getting started</p>
+          <h2 class="section-heading">Up and running in three steps</h2>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step-number">01</span>
+              <h3>Create a board</h3>
+              <p>
+                Start from a blank board or a template built for launches,
+                sprints, or personal projects.
+              </p>
+            </li>
+            <li class="step">
+              <span class="step-number">02</span>
+              <h3>Add your tasks</h3>
+              <p>
+                Break work into clear tasks, set due dates, and assign them to
+                the right person.
+              </p>
+            </li>
+            <li class="step">
+              <span class="step-number">03</span>
+              <h3>Track progress</h3>
+              <p>
+                Watch work move forward in real time, and see exactly what's
+                left before the deadline.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============================= CTA banner ============================= -->
+      <section class="cta-banner">
+        <div class="section-inner cta-inner">
+          <h2>Ready to get things done?</h2>
+          <p>
+            Join teams who traded scattered spreadsheets for one clear view of
+            their work.
+          </p>
+          <a href="/register" class="btn-primary-lg btn-on-dark"
+            >Get started free</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================= Footer ============================= -->
+    <footer class="site-footer">
+      <div class="section-inner footer-inner">
+        <div class="footer-brand">
+          <span class="brand-icon brand-icon--sm" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12.5L9.5 17L19 7"
+                stroke="white"
+                stroke-width="2.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span>TaskFlow</span>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="/login">Sign in</a>
+          <a href="/register">Create account</a>
+        </nav>
+
+        <p class="footer-copy">&copy; 2026 TaskFlow. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

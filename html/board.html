@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal · TaskFlow</title>
+    <link rel="stylesheet" href="/css/board.css" />
+  </head>
+  <body>
+    <!-- ===== Hidden state-toggles (CSS-only interactivity, no JS) ===== -->
+    <input type="checkbox" id="modal-toggle" class="toggle-input" form="new-task-form" aria-hidden="true" />
+    <input type="checkbox" id="invite-modal-toggle" class="toggle-input" aria-hidden="true" />
+    <input type="checkbox" id="sidebar-toggle" class="toggle-input" aria-hidden="true" />
+    <input type="checkbox" id="panel-toggle" class="toggle-input" aria-hidden="true" />
+    <input type="checkbox" id="star-toggle" class="toggle-input" aria-hidden="true" />
+
+    <div class="app-shell">
+      <!-- Overlay used to close the mobile sidebar by tapping outside it -->
+      <label for="sidebar-toggle" class="sidebar-overlay" aria-hidden="true"></label>
+
+      <!-- ============================= Sidebar ============================= -->
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <a href="/" class="sidebar-brand">
+            <span class="brand-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12.5L9.5 17L19 7" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span>TaskFlow</span>
+          </a>
+          <label for="sidebar-toggle" class="sidebar-close" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </label>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main">
+          <p class="nav-group-label">Workspace</p>
+          <a href="/dashboard" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+              <rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+              <rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+              <rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="/boards" class="nav-item is-active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8" />
+              <path d="M3 9H21" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <span>Boards</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12.5L9.5 17L19 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <span>My Tasks</span>
+            <span class="nav-badge">6</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8" />
+              <path d="M3.5 20c0-3 2.5-5.2 5.5-5.2s5.5 2.2 5.5 5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              <path d="M15.2 15c2.2.3 3.8 2.2 3.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Team</span>
+          </a>
+
+          <p class="nav-group-label">General</p>
+          <a href="#" class="nav-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8" />
+              <path d="M12 3.5V6M12 18V20.5M20.5 12H18M6 12H3.5M17.7 6.3L16 8M8 16L6.3 17.7M17.7 17.7L16 16M8 8L6.3 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="index.html" class="sidebar-user">
+          <span class="avatar avatar--md">JC</span>
+          <span class="sidebar-user-info">
+            <span class="sidebar-user-name">Jane Cooper</span>
+            <span class="sidebar-user-role">Sign out</span>
+          </span>
+        </a>
+      </aside>
+
+      <!-- ============================= Main ============================= -->
+      <div class="main">
+        <!-- Topbar -->
+        <header class="topbar">
+          <label for="sidebar-toggle" class="hamburger-btn" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </label>
+
+          <label class="search-field">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+              <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <input type="text" placeholder="Search tasks, boards, people…" aria-label="Search" />
+          </label>
+
+          <div class="topbar-actions">
+            <!-- Notifications dropdown -->
+            <div class="dropdown">
+              <input type="checkbox" id="notif-toggle" class="toggle-input" aria-hidden="true" />
+              <label for="notif-toggle" class="icon-btn" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                  <path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+                <span class="icon-btn-dot"></span>
+              </label>
+              <div class="dropdown-panel notif-panel">
+                <p class="dropdown-title">Notifications</p>
+                <ul class="notif-list">
+                  <li>
+                    <span class="avatar avatar--xs">MP</span>
+                    <p><strong>Mia Park</strong> moved a task to In Progress<span>2m ago</span></p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">RK</span>
+                    <p><strong>Ravi Kapoor</strong> completed a task<span>1h ago</span></p>
+                  </li>
+                  <li>
+                    <span class="avatar avatar--xs">JC</span>
+                    <p><strong>Jane Cooper</strong> left a comment<span>3h ago</span></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <label for="modal-toggle" class="btn-primary-sm">+ New Task</label>
+
+            <!-- Profile dropdown -->
+            <div class="dropdown">
+              <input type="checkbox" id="profile-toggle" class="toggle-input" aria-hidden="true" />
+              <label for="profile-toggle" class="avatar avatar--sm avatar--clickable" aria-hidden="true">JC</label>
+              <div class="dropdown-panel profile-panel">
+                <p class="dropdown-title">Jane Cooper</p>
+                <p class="dropdown-subtitle">jane.cooper@example.com</p>
+                <a href="#" class="dropdown-link">View profile</a>
+                <a href="#" class="dropdown-link">Account settings</a>
+                <a href="index.html" class="dropdown-link dropdown-link--danger">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <!-- Breadcrumb -->
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/boards">Boards</a>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span aria-current="page" id="current-page"></span>
+          </nav>
+
+          <!-- ================= Board header ================= -->
+          <div class="board-header">
+            <div class="board-header-main">
+              <span class="board-header-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <rect x="4" y="3" width="16" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8" />
+                  <path d="M8.5 3V5.5H15.5V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M8 11H16M8 15H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </span>
+              <div>
+                <div class="board-title-row">
+                  <h1 id="board-title"></h1>
+                  <span class="badge badge--visibility" id="badge-visibility">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke="currentColor" stroke-width="1.9" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.9" /></svg>
+                    
+                  </span>
+                </div>
+                <p class="board-header-sub" id="board-description"></p>
+                <div class="board-header-meta">
+                  <span id="board-created"></span>
+                  <span class="meta-dot" aria-hidden="true">•</span>
+                  <span id="board-updated"></span>
+                  <span class="meta-dot" aria-hidden="true">•</span>
+                  <span>Owner: <strong id="owner-name"></strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="board-header-actions">
+              <label for="star-toggle" class="icon-btn star-btn" aria-label="Add to favorites">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3.5L14.9 9.4L21.4 10.3L16.7 14.9L17.8 21.4L12 18.3L6.2 21.4L7.3 14.9L2.6 10.3L9.1 9.4L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                </svg>
+              </label>
+
+              <label for="invite-modal-toggle" class="icon-btn" aria-label="Share board">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <circle cx="18" cy="5" r="2.6" stroke="currentColor" stroke-width="1.7" />
+                  <circle cx="6" cy="12" r="2.6" stroke="currentColor" stroke-width="1.7" />
+                  <circle cx="18" cy="19" r="2.6" stroke="currentColor" stroke-width="1.7" />
+                  <path d="M8.3 10.7L15.7 6.6M8.3 13.3L15.7 17.4" stroke="currentColor" stroke-width="1.7" />
+                </svg>
+              </label>
+
+              <div class="avatar-stack">
+                <span class="avatar avatar--sm avatar--stacked">JC</span>
+                <span class="avatar avatar--sm avatar--stacked avatar--purple">KR</span>
+                <span class="avatar avatar--sm avatar--stacked avatar--green">JD</span>
+                <span class="avatar avatar--sm avatar--stacked avatar--amber">+3</span>
+              </div>
+
+              <label for="invite-modal-toggle" class="btn-secondary-sm">Invite Members</label>
+
+              <div class="dropdown">
+                <input type="checkbox" id="settings-toggle" class="toggle-input" aria-hidden="true" />
+                <label for="settings-toggle" class="icon-btn" aria-label="Board settings">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8" />
+                    <path d="M12 3.5V6M12 18V20.5M20.5 12H18M6 12H3.5M17.7 6.3L16 8M8 16L6.3 17.7M17.7 17.7L16 16M8 8L6.3 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                  </svg>
+                </label>
+                <div class="dropdown-panel settings-panel">
+                  <p class="dropdown-title">Board settings</p>
+                  <a href="#" class="dropdown-link">Edit board</a>
+                  <a href="#" class="dropdown-link">Rename board</a>
+                  <a href="#" class="dropdown-link">Change visibility</a>
+                  <a href="#" class="dropdown-link">Manage members</a>
+                  <label for="invite-modal-toggle" class="dropdown-link">Copy invite link</label>
+                  <a href="#" class="dropdown-link">Duplicate board</a>
+                  <a href="#" class="dropdown-link">Export board</a>
+                  <div class="dropdown-divider" role="separator"></div>
+                  <a href="#" class="dropdown-link">Archive board</a>
+                  <a href="#" class="dropdown-link dropdown-link--danger">Delete board</a>
+                </div>
+              </div>
+
+              <label for="modal-toggle" class="btn-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                </svg>
+                Add Task
+              </label>
+            </div>
+          </div>
+
+          <!-- ================= Board statistics ================= -->
+          <section class="stats-grid board-metrics" aria-label="Board statistics">
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--blue" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8" /><path d="M8 12H16M8 16H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+              </span>
+              <p class="stat-value" id="total-tasks">18</p>
+              <p class="stat-label">Total Tasks</p>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8" /><path d="M8.3 12.3L10.7 14.7L15.7 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </span>
+              <p class="stat-value" id="total-completed">12</p>
+              <p class="stat-label">Completed</p>
+              <span class="stat-trend stat-trend--up">+18% this week</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--amber" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8" /><path d="M12 7.5V12L15 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </span>
+              <p class="stat-value" id="total-in-progress">4</p>
+              <p class="stat-label">In Progress</p>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--red" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3.5L21 19.5H3L12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /><path d="M12 10V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><circle cx="12" cy="16.8" r="0.9" fill="currentColor" /></svg>
+              </span>
+              <p class="stat-value" id="total-overdue">2</p>
+              <p class="stat-label">Overdue</p>
+              <span class="stat-trend stat-trend--down">Needs attention</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--purple" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.8" /><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8" /><path d="M3.5 20c0-3 2.5-5.2 5.5-5.2s5.5 2.2 5.5 5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /><path d="M15.2 15c2.2.3 3.8 2.2 3.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+              </span>
+              <p class="stat-value" id="member-number"></p>
+              <p class="stat-label">Members</p>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon stat-icon--teal" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19V15M9.5 19V10M15 19V13M20 19V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+              </span>
+              <p class="stat-value" id="completion-rate">67<span class="stat-value-unit">%</span></p>
+              <p class="stat-label">Completion Rate</p>
+            </div>
+          </section>
+
+          <!-- ================= Quick actions ================= -->
+          <section class="quick-actions" aria-label="Quick actions">
+            <label for="modal-toggle" class="quick-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" /></svg>
+              New Task
+            </label>
+            <button type="button" class="quick-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="7" height="16" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M15 8V16M11 12H19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+              New List
+            </button>
+            <label for="invite-modal-toggle" class="quick-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7" /><path d="M3.5 19c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /><path d="M18 8V13M15.5 10.5H20.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+              Invite
+            </label>
+            <button type="button" class="quick-action" data-copy="">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7" /></svg>
+              Copy Invite Link
+            </button>
+            <button type="button" class="quick-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4" width="17" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M5 9V17.5A2.5 2.5 0 0 0 7.5 20H16.5A2.5 2.5 0 0 0 19 17.5V9" stroke="currentColor" stroke-width="1.7" /><path d="M10 13H14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+              Archive Board
+            </button>
+            <button type="button" class="quick-action">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 4V15M12 15L8.5 11.5M12 15L15.5 11.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /><path d="M5 16V18.5A1.5 1.5 0 0 0 6.5 20H17.5A1.5 1.5 0 0 0 19 18.5V16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+              Export Board
+            </button>
+          </section>
+
+          <!-- ================= Content grid: board panel + right sidebar ================= -->
+          <div class="content-grid">
+            <!-- ================= Left: board panel ================= -->
+            <section class="board-panel" aria-label="Personal board">
+              <!-- Filters -->
+              <div class="filters-bar">
+                <div class="filters-left">
+                  <label class="filter-select">
+                    <span>Status</span>
+                    <select><option>All</option><option>To Do</option><option>In Progress</option><option>Done</option></select>
+                  </label>
+                  <label class="filter-select">
+                    <span>Priority</span>
+                    <select><option>All</option><option>Urgent</option><option>High</option><option>Medium</option><option>Low</option></select>
+                  </label>
+                  <label class="filter-select">
+                    <span>Assignee</span>
+                    <select><option>Everyone</option><option>Jane Cooper</option><option>Kaizer Reyes</option><option>John Diaz</option></select>
+                  </label>
+                  <label class="filter-select">
+                    <span>Due Date</span>
+                    <select><option>Any time</option><option>Today</option><option>This week</option><option>Overdue</option></select>
+                  </label>
+                  <label class="filter-select">
+                    <span>Labels</span>
+                    <select><option>All labels</option><option>Health</option><option>Finance</option><option>Home</option></select>
+                  </label>
+                </div>
+                <div class="filters-right">
+                  <label class="filter-select filter-select--sort">
+                    <span>Sort by</span>
+                    <select><option>Newest</option><option>Due date</option><option>Priority</option><option>Title</option></select>
+                  </label>
+                  <label class="search-field search-field--tasks">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />
+                      <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                    <input type="text" placeholder="Search tasks…" aria-label="Search tasks" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="kanban">
+                <!-- ===== To Do ===== -->
+                <details class="kanban-column col-todo" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--gray"></span>
+                    <h3>To Do</h3>
+                    <span class="column-count" id="to-do-count"></span>
+                    <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="kanban-cards" id="todo-cards">
+                    
+                  </div>
+                  <div class="empty-state empty-state--column">
+                    <span class="empty-state-icon" aria-hidden="true">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" /><path d="M12 9V15M9 12H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+                    </span>
+                    <p class="empty-state-title">No tasks yet</p>
+                    <p class="empty-state-sub">Create your first task to get started.</p>
+                    <label for="modal-toggle" class="btn-secondary-sm">Create Task</label>
+                  </div>
+                </details>
+                <!-- ===== In Progress ===== -->
+                <details class="kanban-column col-progress" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--amber"></span>
+                    <h3>In Progress</h3>
+                    <span class="column-count" id="in-progress-count">2</span>
+                    <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="kanban-cards" id="in-progress-cards">
+                    
+                  </div>
+                  <div class="empty-state empty-state--column">
+                    <span class="empty-state-icon" aria-hidden="true">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" /><path d="M12 9V15M9 12H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+                    </span>
+                    <p class="empty-state-title">No tasks yet</p>
+                    <p class="empty-state-sub">Create your first task to get started.</p>
+                    <label for="modal-toggle" class="btn-secondary-sm">Create Task</label>
+                  </div>
+                </details>
+                <!-- ===== Backlog — empty state demo ===== -->
+                <details class="kanban-column col-review" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--purple"></span>
+                    <h3>In Review</h3>
+                    <span class="column-count" id="in-review-count">0</span>
+                    <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="empty-state empty-state--column">
+                    <span class="empty-state-icon" aria-hidden="true">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" /><path d="M12 9V15M9 12H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+                    </span>
+                    <p class="empty-state-title">No tasks yet</p>
+                    <p class="empty-state-sub">Create your first task to get started.</p>
+                    <label for="modal-toggle" class="btn-secondary-sm">Create Task</label>
+                  </div>
+                </details>
+                <!-- ===== Done ===== -->
+                <details class="kanban-column col-done" open>
+                  <summary class="kanban-column-header">
+                    <span class="column-dot column-dot--green"></span>
+                    <h3>Done</h3>
+                    <span class="column-count" id="done-count">3</span>
+                    <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </summary>
+                  <div class="kanban-cards" id="done-cards">
+                    
+                  </div>
+                  <div class="empty-state empty-state--column">
+                    <span class="empty-state-icon" aria-hidden="true">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" /><path d="M12 9V15M9 12H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+                    </span>
+                    <p class="empty-state-title">No tasks yet</p>
+                    <p class="empty-state-sub">Create your first task to get started.</p>
+                    <label for="modal-toggle" class="btn-secondary-sm">Create Task</label>
+                  </div>
+              </div>
+            </section>
+
+            <!-- ================= Right: collapsible sidebar ================= -->
+            <aside class="board-side">
+              <label for="panel-toggle" class="board-side-collapse" aria-label="Collapse panel" id="collapseButton">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14 6L8 12L14 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </label>
+
+              <!-- Board information -->
+              <div class="side-card rail-panel">
+                <p class="side-card-title">Board Details</p>
+                <dl class="info-list">
+                  <div class="info-row">
+                    <dt>Visibility</dt>
+                    <dd id="visibility-detail">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke="currentColor" stroke-width="1.9" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.9" /></svg>
+                      —
+                    </dd>
+                  </div>
+                  <div class="info-row">
+                    <dt>Join Code</dt>
+                    <dd class="info-row-code">
+                      <code id="join-code"></code>
+                      <button type="button" class="copy-btn" data-copy="A8QK21ZX" aria-label="Copy join code">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7" /></svg>
+                      </button>
+                    </dd>
+                  </div>
+                  <div class="info-row"><dt>Tasks</dt><dd></dd></div>
+                  <div class="info-row"><dt>Lists</dt><dd></dd></div>
+                  <div class="info-row"><dt>Created</dt><dd id="created_at-detail"></dd></div>
+                  <div class="info-row"><dt>Last Activity</dt><dd></dd></div>
+                </dl>
+              </div>
+
+              <!-- Members -->
+              <div class="side-card rail-panel">
+                <div class="side-card-header">
+                  <p class="side-card-title">Members</p>
+                  <span class="side-card-count">5</span>
+                </div>
+                <ul class="member-list">
+                  <li class="member-row">
+                    <span class="member-avatar-wrap">
+                      <span class="avatar avatar--sm">JC</span>
+                      <span class="online-dot" aria-hidden="true"></span>
+                    </span>
+                    <span class="member-info">
+                      <span class="member-name">Jane</span>
+                      <span class="role-badge role-badge--owner">Owner</span>
+                    </span>
+                    <div class="member-tooltip">
+                      <strong>Jane Cooper</strong>
+                      <span>Owner</span>
+                      <span class="member-tooltip-sub">Active now</span>
+                    </div>
+                  </li>
+                  <li class="member-row">
+                    <span class="member-avatar-wrap">
+                      <span class="avatar avatar--sm avatar--purple">KR</span>
+                      <span class="online-dot" aria-hidden="true"></span>
+                    </span>
+                    <span class="member-info">
+                      <span class="member-name">Kaizer</span>
+                      <span class="role-badge role-badge--admin">Admin</span>
+                    </span>
+                    <div class="member-tooltip">
+                      <strong>Kaizer Reyes</strong>
+                      <span>Admin</span>
+                      <span class="member-tooltip-sub">Last active 3 mins ago</span>
+                    </div>
+                  </li>
+                  <li class="member-row">
+                    <span class="member-avatar-wrap">
+                      <span class="avatar avatar--sm avatar--green">JD</span>
+                    </span>
+                    <span class="member-info">
+                      <span class="member-name">John</span>
+                      <span class="role-badge role-badge--member">Member</span>
+                    </span>
+                    <div class="member-tooltip">
+                      <strong>John Diaz</strong>
+                      <span>Member</span>
+                      <span class="member-tooltip-sub">Last active 1 hour ago</span>
+                    </div>
+                  </li>
+                  <li class="member-row">
+                    <span class="member-avatar-wrap">
+                      <span class="avatar avatar--sm avatar--amber">ML</span>
+                    </span>
+                    <span class="member-info">
+                      <span class="member-name">Maria</span>
+                      <span class="role-badge role-badge--member">Member</span>
+                    </span>
+                    <div class="member-tooltip">
+                      <strong>Maria Lopez</strong>
+                      <span>Member</span>
+                      <span class="member-tooltip-sub">Last active yesterday</span>
+                    </div>
+                  </li>
+                  <li class="member-row member-row--more">
+                    <span class="member-avatar-wrap">
+                      <span class="avatar avatar--sm avatar--muted">+3</span>
+                    </span>
+                    <span class="member-info">
+                      <span class="member-name">3 more members</span>
+                    </span>
+                  </li>
+                </ul>
+                <label for="invite-modal-toggle" class="btn-secondary-sm btn-block">Invite Member</label>
+              </div>
+
+              <!-- Upcoming deadlines -->
+              <div class="side-card rail-panel">
+                <p class="side-card-title">Upcoming Deadlines</p>
+                <ul class="mini-list deadline-list">
+                  <li><span class="mini-dot mini-dot--amber"></span>Organize home office <span class="mini-list-meta">Tomorrow</span></li>
+                  <li><span class="mini-dot mini-dot--gray"></span>Update budget spreadsheet <span class="mini-list-meta">Jul 24</span></li>
+                  <li><span class="mini-dot mini-dot--gray"></span>Book dentist appointment <span class="mini-list-meta">Jul 26</span></li>
+                </ul>
+              </div>
+
+              <!-- Recent files -->
+              <div class="side-card rail-panel">
+                <p class="side-card-title">Recent Files</p>
+                <ul class="mini-list mini-list--files">
+                  <li>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8L14 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><path d="M14 3V8H19" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /></svg>
+                    dashboard-mockup.fig
+                  </li>
+                  <li>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8L14 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><path d="M14 3V8H19" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /></svg>
+                    budget-2026.xlsx
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Pinned notes -->
+              <div class="side-card rail-panel">
+                <p class="side-card-title">Pinned Notes</p>
+                <div class="pinned-note">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3L14 9L20 10L15.5 14L17 20L12 17L7 20L8.5 14L4 10L10 9L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+                  Remember to check in with Mom about the trip dates before booking flights.
+                </div>
+              </div>
+
+              <!-- Recent activity -->
+              <div class="side-card rail-panel">
+                <p class="side-card-title">Recent Activity</p>
+                <ul class="activity-feed activity-list">
+                  <li class="activity-item">
+                    <span class="avatar avatar--xs">JC</span>
+                    <span class="activity-icon activity-icon--green" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </span>
+                    <span class="activity-text"><strong>Jane</strong> completed <em>Renew Gym Membership</em></span>
+                    <span class="activity-time">2 mins ago</span>
+                  </li>
+                  <li class="activity-item">
+                    <span class="avatar avatar--xs avatar--purple">KR</span>
+                    <span class="activity-icon activity-icon--blue" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
+                    </span>
+                    <span class="activity-text"><strong>Kaizer</strong> created <em>Design Login Page</em></span>
+                    <span class="activity-time">12 mins ago</span>
+                  </li>
+                  <li class="activity-item">
+                    <span class="avatar avatar--xs avatar--amber">ML</span>
+                    <span class="activity-icon activity-icon--amber" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L15 7M20 12L15 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </span>
+                    <span class="activity-text"><strong>Maria</strong> moved <em>Landing Page</em> to Done</span>
+                    <span class="activity-time">1 hour ago</span>
+                  </li>
+                  <li class="activity-item">
+                    <span class="avatar avatar--xs avatar--green">JD</span>
+                    <span class="activity-icon activity-icon--purple" aria-hidden="true">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="2.6" stroke="currentColor" stroke-width="2" /><path d="M4 18c0-2.5 2.2-4.3 5-4.3s5 1.8 5 4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+                    </span>
+                    <span class="activity-text"><strong>John</strong> invited Alex</span>
+                    <span class="activity-time">Yesterday</span>
+                  </li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= New Task modal ============================= -->
+    <div class="modal-overlay">
+      <label for="modal-toggle" class="modal-backdrop" aria-hidden="true"></label>
+
+      <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="new-task-title">
+        <div class="modal-header">
+          <h2 id="new-task-title">New task</h2>
+          <label for="modal-toggle" class="modal-close" aria-label="Close dialog">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </label>
+        </div>
+
+        <form class="modal-form" id="new-task-form" action="#">
+          <div class="field-group">
+            <label for="new-task-name">Task name</label>
+            <input type="text" id="new-task-name" placeholder="e.g. Update onboarding flow" />
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="new-task-column">Column</label>
+              <select id="new-task-column">
+                <option>To Do</option>
+                <option>In Progress</option>
+                <option>Done</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="new-task-due">Due date</label>
+              <input type="date" id="new-task-due" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-assignee">Assignee</label>
+            <select id="new-task-assignee">
+              <option>Jane Cooper</option>
+              <option>Kaizer Reyes</option>
+              <option>John Diaz</option>
+              <option>Maria Lopez</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="new-task-notes">Notes</label>
+            <textarea id="new-task-notes" rows="3" placeholder="Add any extra context…"></textarea>
+          </div>
+
+          <!-- type="reset" (not "submit"): static demo, no backend. Resetting the
+               form also unchecks the linked #modal-toggle checkbox, closing the
+               dialog. Wire this to a real submit handler in production. -->
+          <div class="modal-actions">
+            <button type="reset" form="new-task-form" class="btn-secondary-sm">Cancel</button>
+            <button type="reset" form="new-task-form" class="btn-primary-sm">Create task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================= Invite / Share modal ============================= -->
+    <div class="modal-overlay modal-overlay--invite">
+      <label for="invite-modal-toggle" class="modal-backdrop" aria-hidden="true"></label>
+
+      <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="invite-title">
+        <div class="modal-header">
+          <h2 id="invite-title">Invite to Personal</h2>
+          <label for="invite-modal-toggle" class="modal-close" aria-label="Close dialog">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </label>
+        </div>
+
+        <div class="modal-form">
+          <div class="field-group">
+            <label for="invite-email">Invite by email</label>
+            <div class="input-with-btn">
+              <input type="email" id="invite-email" placeholder="name@example.com" />
+              <button type="button" class="btn-primary-sm">Send</button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="invite-link">Shareable link</label>
+            <div class="input-with-btn">
+              <input type="text" id="invite-link" readonly value="https://taskflow.app/join/A8QK21ZX" />
+              <button type="button" class="btn-secondary-sm" data-copy="https://taskflow.app/join/A8QK21ZX">Copy</button>
+            </div>
+            <p class="field-hint">Anyone with this link can request to join as a member.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/script/api.js"></script>
+    <script src="/script/board.js"></script>
+  </body>
+</html>

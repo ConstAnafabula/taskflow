@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In · TaskFlow</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+  <main class="page">
+    <div class="login-card">
+
+      <!-- Brand -->
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12.5L9.5 17L19 7" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-name">TaskFlow</span>
+      </div>
+
+      <!-- Heading -->
+      <div class="heading">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Sign in to continue managing your tasks.</p>
+      </div>
+
+      <!-- Form -->
+      <form class="login-form" action="#" method="post">
+
+        <div class="field-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="field-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox-label" for="remember">
+            <input type="checkbox" id="remember" name="remember">
+            <span>Remember me</span>
+          </label>
+
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary">Sign In</button>
+
+      </form>
+
+      <!-- Sign up -->
+      <p class="signup-text">
+        Don't have an account? <a href="/register" class="signup-link">Create Account</a>
+      </p>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>&copy; 2026 TaskFlow. All rights reserved.</p>
+    </footer>
+  </main>
+
+<script src="/script/api.js"></script>
+<script src="/script/login.js"></script>
+</body>
+</html>
