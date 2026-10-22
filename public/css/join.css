@@ -1,0 +1,523 @@
+/* ==========================================================================
+   TaskFlow — Join via Link Styles
+   Mobile-first, vanilla CSS3. No frameworks, no JavaScript required for
+   layout/visuals. Loading/success/error states are driven by classes
+   (.is-loading on the button, .join-status--success/--error/--loading on
+   the status area, [disabled] on buttons) that JS can toggle.
+   Self-contained: does not depend on style.css, signup.css, dashboard.css,
+   join.css, or landing.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens (mirrors dashboard.css / join.css so this page matches)
+   -------------------------------------------------------------------------- */
+:root {
+  --color-bg: #f5f7fa;
+  --color-card: #ffffff;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-soft: #eff4ff;
+
+  --color-text-heading: #0f172a;
+  --color-text-body: #475569;
+  --color-text-muted: #94a3b8;
+
+  --color-border: #e2e8f0;
+
+  --color-green: #16a34a;
+  --color-green-soft: #ecfdf3;
+  --color-amber: #d97706;
+  --color-amber-soft: #fffbeb;
+  --color-red: #dc2626;
+  --color-red-soft: #fef2f2;
+  --color-purple: #7c3aed;
+  --color-purple-soft: #f5f3ff;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 20px -8px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 24px 48px -16px rgba(15, 23, 42, 0.3);
+
+  --font-base:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 28px;
+
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: var(--color-text-heading);
+  letter-spacing: -0.01em;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+p {
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Page shell
+   -------------------------------------------------------------------------- */
+.invitation-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar: brand only, echoes join.css / dashboard.css */
+.invitation-topbar {
+  display: flex;
+  align-items: center;
+  padding: var(--space-md);
+}
+
+.invitation-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text-heading);
+}
+
+.brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-primary), #1e40af);
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. Main content
+   -------------------------------------------------------------------------- */
+.invitation-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   5. Invitation card (matches .board-panel / .rail-panel card treatment)
+   -------------------------------------------------------------------------- */
+.invitation-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg) var(--space-md);
+  transition: box-shadow var(--transition-base);
+}
+
+.invitation-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-soft);
+  margin-bottom: var(--space-sm);
+}
+
+.invitation-card-header {
+  margin-bottom: var(--space-md);
+}
+
+.invitation-card-header h1 {
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+
+.invitation-sub {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.invitation-sub strong {
+  color: var(--color-text-heading);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   6. Board info panel (matches the muted .kanban-column background pattern)
+   -------------------------------------------------------------------------- */
+.board-info {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.board-info-name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-text-heading);
+}
+
+.board-info-description {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.board-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.board-info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.board-info-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-card);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.board-info-row-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.board-info-row-value {
+  margin-left: auto;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Avatars, reused from the shared component set */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), #1e40af);
+  color: #fff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.avatar--xs {
+  width: 22px;
+  height: 22px;
+  font-size: 0.625rem;
+}
+
+/* Visibility badge, reuses the task-tag color language */
+.visibility-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+}
+.visibility-tag--private {
+  color: var(--color-amber);
+  background-color: var(--color-amber-soft);
+}
+.visibility-tag--shared {
+  color: var(--color-green);
+  background-color: var(--color-green-soft);
+}
+
+/* --------------------------------------------------------------------------
+   7. Status area (loading / success / error), toggled via modifier classes
+   -------------------------------------------------------------------------- */
+.join-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  line-height: 1.45;
+  margin-bottom: var(--space-sm);
+}
+
+.join-status[hidden] {
+  display: none;
+}
+
+.join-status svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.join-status--loading {
+  color: var(--color-text-body);
+  background-color: var(--color-bg);
+}
+
+.join-status--loading .status-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  animation: invitation-spin 700ms linear infinite;
+  margin-top: 1px;
+}
+
+.join-status--success {
+  color: var(--color-green);
+  background-color: var(--color-green-soft);
+}
+
+.join-status--error {
+  color: var(--color-red);
+  background-color: var(--color-red-soft);
+}
+
+@keyframes invitation-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Actions (full-width primary + secondary button pair)
+   -------------------------------------------------------------------------- */
+.invitation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--color-primary);
+  padding: 12px 16px;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-fast),
+    box-shadow var(--transition-base);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-primary);
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity var(--transition-fast);
+}
+
+/* Loading state: hide label text, show spinner. Toggled via .is-loading. */
+.btn-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: invitation-spin 700ms linear infinite;
+}
+
+.btn-primary.is-loading .btn-label {
+  opacity: 0;
+}
+
+.btn-primary.is-loading .btn-spinner {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-body);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg);
+  border-color: var(--color-text-muted);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   9. Footnote below the card
+   -------------------------------------------------------------------------- */
+.invitation-footnote {
+  margin-top: var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.invitation-footnote a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.invitation-footnote a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   10. Accessibility
+   -------------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+  .btn-spinner,
+  .status-spinner {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Responsive breakpoints
+   -------------------------------------------------------------------------- */
+
+/* Small mobile: tighten padding */
+@media (max-width: 420px) {
+  .invitation-topbar {
+    padding: var(--space-sm);
+  }
+  .invitation-card {
+    padding: var(--space-md) var(--space-sm);
+  }
+  .board-info-row-value {
+    text-align: right;
+  }
+}
+
+/* Tablet and up: slightly larger card + breathing room, actions side by side */
+@media (min-width: 768px) {
+  .invitation-card {
+    padding: var(--space-lg);
+  }
+  .invitation-actions {
+    flex-direction: row-reverse;
+  }
+}
