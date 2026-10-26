@@ -26,5 +26,7 @@ router.get("/api", requireAuth, (req, res) => {
         })
     })
 });
-
+router.get("/users", requireAuth, (req, res) => {
+    
+})
 module.exports = router;
